@@ -290,6 +290,40 @@ footer nav ul {
   margin: 2em
 }
 
+.home-header {
+  flex-direction: column-reverse;
+}
+
+.base-header {
+  display: flex;
+  justify-content: space-between;
+  margin: 50px 0
+}
+
+.admin-nav {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  background-color: black;
+}
+
+.admin-nav-text {
+  color: grey;
+  width: 15%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.admin-nav-button {
+  border-radius: 60px;
+  background-color: white;
+  color: black;
+  height: 38px;
+  width: 15%;
+}
+
 .log-in-title {
   position: absolute;
   width: 100px;
