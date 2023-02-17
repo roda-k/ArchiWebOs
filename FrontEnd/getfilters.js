@@ -15,9 +15,11 @@ function adminPageView() {
   const adminNav = document.createElement('div')
   const adminNavText = document.createElement('p')
   const adminNavButton = document.createElement('button')
-  const modifyGalleryButton = document.createElement('button')
+  const modifyGalleryButton = document.createElement('a')
 
-  modifyGalleryButton.innerText = "modifier"
+  modifyGalleryButton.setAttribute('href', "#modal")
+  modifyGalleryButton.classList.add('js-modal')
+  modifyGalleryButton.innerHTML = "modifier"
   adminNavButton.innerText = "publier les changements"
   adminNavText.innerText = "Mode édition"
   loginChange.innerHTML = "logout"
@@ -57,7 +59,7 @@ function orderBy(filter) {
   const worksArray = document.getElementsByClassName('work')
 
   for (let i = 0; i < worksArray.length; i++) {
-    if (filter !== worksArray[i].getAttribute("id")) {
+    if (filter !== worksArray[i].getAttribute("id").split('-id=')[0]) {
       worksArray[i].style.display = 'none'
     }
     else {

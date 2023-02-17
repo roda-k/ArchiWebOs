@@ -17,7 +17,7 @@ function getGallery(works) {
     workImage.alt = works[i].title
     workCaption.innerText = works[i].title
     workContent.classList.add('work')
-    workContent.setAttribute("id", works[i].category.name)
+    workContent.setAttribute("id", `${works[i].category.name}-id=${works[i].id}`)
     
     const workSection = document.querySelector(".gallery")
 
