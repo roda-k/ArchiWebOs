@@ -13,7 +13,8 @@ const openModal = function (e) {
   modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation)
   const testContent = document.createElement("div")
   testContent.innerHTML = "oulala"
-  document.getElementsByClassName('modal-wrapper')[0].appendChild(testContent)
+  const test = document.getElementsByClassName('modal-wrapper')[0]
+  test.appendChild(testContent)
 }
 
 const closeModal = function (e) {
