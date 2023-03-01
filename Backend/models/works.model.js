@@ -14,5 +14,6 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		{timestamps:false}
 	)
+  console.log(Works)
 	return Works
 }
