@@ -392,9 +392,23 @@ footer nav ul {
 }
 .modal-wrapper {
   background-color: white;
-  width: 600px;
+  width: 630px;
   max-width: calc(100vw - 20px);
   max-height: calc(100vh - 20px);
   padding: 20px;
   overflow: auto;
+}
+.modal-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  
+}
+.modal-work {
+  width: 70px;
+  height: 100px;
+  margin: 0 5px 12px 0;
+}
+.work-image {
+  max-width: 100%;
+  max-height: 100%;
 }

@@ -1,9 +1,12 @@
+export let categories
+
 function main() {
   const isLogged = localStorage.getItem("user_token")
   if (isLogged)
     adminPageView()
   fetch('http://localhost:5678/api/categories', { mode: 'cors' })
     .then(reponse => reponse.json())
+    .then(reponse => categories = reponse)
     .then(reponse => getFilters(reponse))
     .catch(err => console.error(err))
 }
