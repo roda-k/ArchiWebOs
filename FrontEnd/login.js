@@ -30,6 +30,8 @@ async function loginAttempt() {
     window.location.replace("./index.html");
   } catch (err) {
     console.log("Le backend il a dit non")
+    const errorBox = document.getElementById('loginErrContainer')
+    errorBox.classList.remove('is-hidden')
   }
 
 }

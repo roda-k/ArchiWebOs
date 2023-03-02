@@ -33,7 +33,7 @@ function adminPageView() {
   modifyTrigger.prepend(modifyGalleryButton)
   adminNav.appendChild(adminNavText)
   adminNav.appendChild(adminNavButton)
-  headerRef.appendChild(adminNav)
+  headerRef.prepend(adminNav)
 
   loginChange.addEventListener("click", () => HandleLogout(), { once: true })
 
