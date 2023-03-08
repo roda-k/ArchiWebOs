@@ -14,9 +14,10 @@ function main() {
 function adminPageView() {
   const headerRef = document.getElementById("head")
   const loginChange = document.getElementById('loginout')
-  const introSection = document.getElementById('introduction')
+  const introSection = document.querySelector('#introduction figure')
   const modifyTrigger = document.getElementById('basePortfolio')
-  const editIcon = document.createElement('img')
+  // const editIcon = document.createElement('svg')
+  const editIcon = document.createElement('span')
   const adminNav = document.createElement('div')
   const adminNavText = document.createElement('p')
   const adminNavButton = document.createElement('button')
@@ -24,7 +25,12 @@ function adminPageView() {
 
   modifyGalleryButton.setAttribute('href', "#modal")
   modifyGalleryButton.classList.add('js-modal')
-  editIcon.src = './assets/icons/edit_FILL0_wght400_GRAD0_opsz48.svg'
+  // editIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg' )
+  // editIcon.setAttribute('fill', '#525252' )
+  // editIcon.setAttribute('height', '24' )
+  // editIcon.setAttribute('width', '24' )
+  // editIcon.setAttribute('viewBox', '0 96 960 960' )
+  editIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="#525252" height="24" viewBox="0 96 960 960" width="24"><path d="M180 876h44l443-443-44-44-443 443v44Zm614-486L666 262l42-42q17-17 42-17t42 17l44 44q17 17 17 42t-17 42l-42 42Zm-42 42L248 936H120V808l504-504 128 128Zm-107-21-22-22 44 44-22-22Z"/></svg>'
   modifyGalleryButton.innerHTML = "modifier"
   adminNavButton.innerText = "publier les changements"
   adminNavText.innerText = "Mode édition"
@@ -35,9 +41,9 @@ function adminPageView() {
 
   introSection.appendChild(editIcon)
   modifyTrigger.appendChild(modifyGalleryButton)
-  modifyTrigger.appendChild(editIcon.cloneNode())
+  modifyTrigger.appendChild(editIcon.cloneNode(true))
   modifyTrigger.appendChild(modifyGalleryButton)
-  adminNav.appendChild(editIcon.cloneNode())
+  adminNav.appendChild(editIcon.cloneNode(true))
   adminNav.appendChild(adminNavText)
   adminNav.appendChild(adminNavButton)
   headerRef.prepend(adminNav)
