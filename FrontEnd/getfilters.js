@@ -14,7 +14,9 @@ function main() {
 function adminPageView() {
   const headerRef = document.getElementById("head")
   const loginChange = document.getElementById('loginout')
+  const introSection = document.getElementById('introduction')
   const modifyTrigger = document.getElementById('basePortfolio')
+  const editIcon = document.createElement('img')
   const adminNav = document.createElement('div')
   const adminNavText = document.createElement('p')
   const adminNavButton = document.createElement('button')
@@ -22,6 +24,7 @@ function adminPageView() {
 
   modifyGalleryButton.setAttribute('href', "#modal")
   modifyGalleryButton.classList.add('js-modal')
+  editIcon.src = './assets/icons/edit_FILL0_wght400_GRAD0_opsz48.svg'
   modifyGalleryButton.innerHTML = "modifier"
   adminNavButton.innerText = "publier les changements"
   adminNavText.innerText = "Mode édition"
@@ -30,10 +33,16 @@ function adminPageView() {
   adminNavText.classList.add('admin-nav-text')
   adminNavButton.classList.add('admin-nav-button')
 
-  modifyTrigger.prepend(modifyGalleryButton)
+  introSection.appendChild(editIcon)
+  modifyTrigger.appendChild(modifyGalleryButton)
+  modifyTrigger.appendChild(editIcon.cloneNode())
+  modifyTrigger.appendChild(modifyGalleryButton)
+  adminNav.appendChild(editIcon.cloneNode())
   adminNav.appendChild(adminNavText)
   adminNav.appendChild(adminNavButton)
   headerRef.prepend(adminNav)
+
+  editIcon.classList.add('edit-icon-style')
 
   loginChange.addEventListener("click", () => HandleLogout(), { once: true })
 

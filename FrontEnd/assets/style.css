@@ -191,6 +191,12 @@ li:hover {
   color: #B1663C;
 }
 
+a {
+  color: black;
+  text-decoration: none;
+}
+
+
 #introduction {
   display: flex;
   align-items: center;
@@ -220,7 +226,13 @@ li:hover {
 
 #portfolio h2 {
   text-align: center;
-  margin-bottom: 1em;
+  margin-right: 10px;
+}
+
+/* Here for priority purposes */
+.edit-icon-style {
+  width: 24px;
+  max-width: 24px;
 }
 
 .gallery {
@@ -233,7 +245,7 @@ li:hover {
 
 .gallery img {
   width: 100%;
-
+  max-height: 373px;
 }
 
 #contact {
@@ -335,6 +347,13 @@ footer nav ul {
   line-height: 16px;
   text-align: center;
 
+}
+
+.base-portfolio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5rem;
 }
 
 .filters {
@@ -439,6 +458,8 @@ footer nav ul {
   box-sizing: border-box;
 }
 
+
+
 .modal {
   display: flex;
   align-items: center;
@@ -449,6 +470,20 @@ footer nav ul {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+.work-container {
+  position: relative;
+}
+
+.delete-icon-container {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 5px;
+  height: 24px;
+  width: 24px;
+  background-color: black;
 }
 
 .js-modal-close {
@@ -572,8 +607,7 @@ footer nav ul {
 }
 
 .work-image {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 70px;
 }
 
 .modal-footer {
