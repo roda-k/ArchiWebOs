@@ -8,7 +8,16 @@ function main() {
     .then(reponse => reponse.json())
     .then(reponse => categories = reponse)
     .then(reponse => getFilters(reponse))
-    .catch(err => console.error(err))
+    .catch(err => {
+      if (err === 500) {
+        const body = document.getElementById('basePortfolio')
+        const errorDiv = document.createElement('div')
+
+        errorDiv.classList.add('general-error-style')
+        errorDiv.innerHTML = "Erreur 500: Une erreur est survenue lors de la récupération des filtres"
+        body.appendChild(errorDiv)
+      }
+    })
 }
 
 function adminPageView() {
@@ -16,7 +25,6 @@ function adminPageView() {
   const loginChange = document.getElementById('loginout')
   const introSection = document.querySelector('#introduction figure')
   const modifyTrigger = document.getElementById('basePortfolio')
-  // const editIcon = document.createElement('svg')
   const editIcon = document.createElement('span')
   const adminNav = document.createElement('div')
   const adminNavText = document.createElement('p')
@@ -25,11 +33,7 @@ function adminPageView() {
 
   modifyGalleryButton.setAttribute('href', "#modal")
   modifyGalleryButton.classList.add('js-modal')
-  // editIcon.setAttribute('xmlns', 'http://www.w3.org/2000/svg' )
-  // editIcon.setAttribute('fill', '#525252' )
-  // editIcon.setAttribute('height', '24' )
-  // editIcon.setAttribute('width', '24' )
-  // editIcon.setAttribute('viewBox', '0 96 960 960' )
+
   editIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="#525252" height="24" viewBox="0 96 960 960" width="24"><path d="M180 876h44l443-443-44-44-443 443v44Zm614-486L666 262l42-42q17-17 42-17t42 17l44 44q17 17 17 42t-17 42l-42 42Zm-42 42L248 936H120V808l504-504 128 128Zm-107-21-22-22 44 44-22-22Z"/></svg>'
   modifyGalleryButton.innerHTML = "modifier"
   adminNavButton.innerText = "publier les changements"
@@ -41,6 +45,7 @@ function adminPageView() {
 
   introSection.appendChild(editIcon)
   modifyTrigger.appendChild(modifyGalleryButton)
+  introSection.appendChild(modifyGalleryButton.cloneNode(true))
   modifyTrigger.appendChild(editIcon.cloneNode(true))
   modifyTrigger.appendChild(modifyGalleryButton)
   adminNav.appendChild(editIcon.cloneNode(true))

@@ -7,7 +7,16 @@ function workFetch() {
     .then(reponse => reponse.json())
     .then(reponse => works = reponse)
     .then(() => getGallery(works))
-    .catch(err => console.error(err))
+    .catch(err => {
+      if (err === 500) {
+        const body = document.getElementById('basePortfolio')
+        const errorDiv = document.createElement('div')
+
+        errorDiv.classList.add('general-error-style')
+        errorDiv.innerHTML = "Erreur 500: Une erreur est survenue lors de la récupération des filtres"
+        body.appendChild(errorDiv)
+      }
+    })
 }
 
 export function getGallery(props) {
@@ -19,7 +28,7 @@ export function getGallery(props) {
     const workContent = document.createElement("figure")
     const workCaption = document.createElement("figcaption")
     const workImage = document.createElement("img")
-   
+
     workImage.crossOrigin = "anonymous"
     workImage.src = props[i].imageUrl
     workImage.alt = props[i].title
@@ -202,6 +211,22 @@ function workUpload() {
       id: data.id,
     }))
     .then(() => modalDeleteView())
+    .catch(err => {
+      const modalBody = document.getElementById('modalContent')
+      const errorDiv = document.createElement('div')
+      errorDiv.classList.add('general-error-style')
+
+      if (err === 500) {
+        errorDiv.innerHTML = "Erreur 500: Une erreur est survenue lors de l'envoi du projet"
+        modalBody.appendChild(errorDiv)
+      } else if (err === 401) {
+        errorDiv.innerHTML = "Erreur 401: Non autorisé"
+        modalBody.appendChild(errorDiv)
+      } else if (err === 400) {
+        errorDiv.innerHTML = "Erreur 400: Mauvaise requête"
+        modalBody.appendChild(errorDiv)
+      }
+    })
 }
 
 function imgNameUpload(value) {
@@ -251,7 +276,7 @@ function gallerySetup(modalGallery) {
 
     deleteIconContainer.classList.add('delete-icon-container')
     deleteIcon.src = './assets/icons/delete_FILL0_wght400_GRAD0_opsz48.svg'
-    
+
     workImage.crossOrigin = "anonymous"
     workImage.src = works[i].imageUrl
     workImage.alt = "éditer"
@@ -300,6 +325,19 @@ async function removeWork(workContainer, id) {
       'Authorization': `Bearer ${user.token}`,
     },
   }).then(response => console.log(response, response.redirected, response.type))
+    .catch(err => {
+      const modalBody = document.getElementById('modalContent')
+      const errorDiv = document.createElement('div')
+      errorDiv.classList.add('general-error-style')
+
+      if (err === 500) {
+        errorDiv.innerHTML = "Erreur 500: Une erreur est survenue lors de l'envoi du projet"
+        modalBody.appendChild(errorDiv)
+      } else if (err === 401) {
+        errorDiv.innerHTML = "Erreur 401: Non autorisé"
+        modalBody.appendChild(errorDiv)
+      }
+    })
   workContainer.remove()
   const indexToDelete = works.findIndex((element) => element.id === id)
   works.splice(indexToDelete, 1)
