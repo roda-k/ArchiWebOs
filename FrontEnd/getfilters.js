@@ -5,19 +5,33 @@ function main() {
   if (isLogged)
     adminPageView()
   fetch('http://localhost:5678/api/categories', { mode: 'cors' })
-    .then(reponse => reponse.json())
-    .then(reponse => categories = reponse)
-    .then(reponse => getFilters(reponse))
-    .catch(err => {
-      if (err === 500) {
-        const body = document.getElementById('basePortfolio')
-        const errorDiv = document.createElement('div')
+  .then(reponse => {
+    const body = document.getElementById('basePortfolio')
+    const existError = document.getElementById('errorDiv')
+    let errorDiv;
+    if (!existError) {
+      errorDiv = document.createElement('div')
+      errorDiv.classList.add('is-hidden')
+      errorDiv.classList.add('general-error-style')
+      errorDiv.setAttribute('id', 'errorDiv')
+      body.appendChild(errorDiv)
+    } else {
+      errorDiv = existError
+      errorDiv.classList.add('is-hidden')
+    }
 
-        errorDiv.classList.add('general-error-style')
-        errorDiv.innerHTML = "Erreur 500: Une erreur est survenue lors de la récupération des filtres"
-        body.appendChild(errorDiv)
-      }
-    })
+    if (reponse.status === 500) {
+      errorDiv.innerHTML = "Erreur 500: Une erreur est survenue lors de la récupération des catégories"
+      errorDiv.classList.remove('is-hidden')
+    } else {
+      reponse = reponse.json()
+      .then(res => {
+        categories = res
+        getFilters(res)
+      })
+    }
+  })
+    
 }
 
 function adminPageView() {

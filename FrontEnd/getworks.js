@@ -84,7 +84,6 @@ function modalDeleteView() {
   modalDeleteLink.appendChild(deleteLinkText)
   modalDeleteLink.title = "Supprimer la galerie"
   modalDeleteLink.href = '#'
-  // modalDeleteLink.innerHTML = "Supprimer la galerie"
   modalDeleteLink.classList.add("modal-delete-link")
 
   // Children append + class attribute
@@ -107,7 +106,6 @@ function modalDeleteView() {
   getGallery(works)
 }
 
-// addeventlistener('input', fonction)
 
 function modalAddView() {
   const modalBody = document.getElementById('modalContent')
@@ -185,7 +183,6 @@ function workUpload() {
   let workToSend = new FormData()
   const categoryElement = document.getElementById('filterName')
   const user = JSON.parse(localStorage.getItem('user_token'))
-  // Bruh !!!!!
   workToSend.append('userId', user.userId)
   workToSend.append('category', categoryElement.value)
   workToSend.append('image', imgCheck)
@@ -198,35 +195,46 @@ function workUpload() {
       'Authorization': `Bearer ${user.token}`,
     },
     body: workToSend
-  }).then(response => response.json())
-    .then(data => works.push({
-      category: {
-        id: categoryElement.value,
-        name: categories[(categoryElement.value - 1)].name
-      },
-      categoryId: categoryElement.value,
-      imageUrl: URL.createObjectURL(imgCheck),
-      title: titleCheck,
-      userId: user.userId,
-      id: data.id,
-    }))
-    .then(() => modalDeleteView())
-    .catch(err => {
-      const modalBody = document.getElementById('modalContent')
-      const errorDiv = document.createElement('div')
+  }).then(response => {
+    const modalBody = document.getElementById('modalContent')
+    const existError = document.getElementById('errorModal')
+    let errorDiv;
+    if (!existError) {
+      errorDiv = document.createElement('div')
+      errorDiv.classList.add('is-hidden')
       errorDiv.classList.add('general-error-style')
+      errorDiv.setAttribute('id', 'errorModal')
+      modalBody.appendChild(errorDiv)
+    } else {
+      errorDiv = existError
+      errorDiv.classList.add('is-hidden')
+    }
 
-      if (err === 500) {
-        errorDiv.innerHTML = "Erreur 500: Une erreur est survenue lors de l'envoi du projet"
-        modalBody.appendChild(errorDiv)
-      } else if (err === 401) {
-        errorDiv.innerHTML = "Erreur 401: Non autorisé"
-        modalBody.appendChild(errorDiv)
-      } else if (err === 400) {
-        errorDiv.innerHTML = "Erreur 400: Mauvaise requête"
-        modalBody.appendChild(errorDiv)
-      }
-    })
+    if (response.status === 500) {
+      errorDiv.innerHTML = "Erreur 500: Une erreur est survenue lors de l'envoi du projet"
+      errorDiv.classList.remove('is-hidden')
+    } else if (response.status === 401) {
+      errorDiv.innerHTML = "Erreur 401: Non autorisé"
+      errorDiv.classList.remove('is-hidden')
+    } else if (response.status === 400) {
+      errorDiv.innerHTML = "Erreur 400: Mauvaise requête"
+      errorDiv.classList.remove('is-hidden')
+    } else {
+      response.json()
+        .then(data => works.push({
+          category: {
+            id: categoryElement.value,
+            name: categories[(categoryElement.value - 1)].name
+          },
+          categoryId: categoryElement.value,
+          imageUrl: URL.createObjectURL(imgCheck),
+          title: titleCheck,
+          userId: user.userId,
+          id: data.id,
+        }))
+        .then(() => modalDeleteView())
+    }
+  })
 }
 
 function imgNameUpload(value) {
@@ -240,9 +248,8 @@ function imgNameUpload(value) {
   }
 }
 
-function imgUpload(files, value) {
+function imgUpload(files) {
   const submitButton = document.getElementById('submitButton')
-  const modalBody = document.getElementById('modalContent')
   const inputLabelToDelete = document.getElementsByClassName('label-style')
   const previewContainer = document.getElementsByClassName('modal-add-container')
   const imgPreviewURL = URL.createObjectURL(files[0])
@@ -324,24 +331,35 @@ async function removeWork(workContainer, id) {
       'Access-Control-Allow-Origin': '*',
       'Authorization': `Bearer ${user.token}`,
     },
-  }).then(response => console.log(response, response.redirected, response.type))
-    .catch(err => {
-      const modalBody = document.getElementById('modalContent')
-      const errorDiv = document.createElement('div')
+  }).then(response => {
+    const modalBody = document.getElementById('modalContent')
+    const existError = document.getElementById('errorDiv')
+    let errorDiv;
+    if (!existError) {
+      errorDiv = document.createElement('div')
+      errorDiv.classList.add('is-hidden')
       errorDiv.classList.add('general-error-style')
+      errorDiv.setAttribute('id', 'errorDiv')
+      modalBody.appendChild(errorDiv)
+    } else {
+      errorDiv = existError
+      errorDiv.classList.add('is-hidden')
+    }
 
-      if (err === 500) {
-        errorDiv.innerHTML = "Erreur 500: Une erreur est survenue lors de l'envoi du projet"
-        modalBody.appendChild(errorDiv)
-      } else if (err === 401) {
-        errorDiv.innerHTML = "Erreur 401: Non autorisé"
-        modalBody.appendChild(errorDiv)
-      }
-    })
-  workContainer.remove()
-  const indexToDelete = works.findIndex((element) => element.id === id)
-  works.splice(indexToDelete, 1)
-  getGallery(works)
+    if (response.status === 500) {
+      errorDiv.innerHTML = "Erreur 500: Une erreur est survenue lors de l'envoi du projet"
+      errorDiv.classList.remove('is-hidden')
+    } else if (response.status === 401) {
+      errorDiv.innerHTML = "Erreur 401: Non autorisé"
+      errorDiv.classList.remove('is-hidden')
+    } else {
+      workContainer.remove()
+      const indexToDelete = works.findIndex((element) => element.id === id)
+      works.splice(indexToDelete, 1)
+      getGallery(works)
+    }
+  })
+
 }
 
 const stopPropagation = function (e) {

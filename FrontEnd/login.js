@@ -46,7 +46,6 @@ async function loginAttempt() {
     } else if (errorGestion === 'email') {
       errorMessage.innerHTML = 'Utilisateur/email incorrect'
     }
-    console.log("error => ", err)
     errorBox.classList.remove('is-hidden')
   }
 
